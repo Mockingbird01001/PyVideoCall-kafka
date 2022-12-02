@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
-# @Last Modified by:   mockingbird
-# @Last Modified time: 2022-12-01 16:37:08
+# @Last Modified by:   BOUFALA Yacine
+# @Last Modified time: 2022-12-02 04:01:19
 
 
 # from audioPlayer import AudioPlayer
@@ -10,7 +10,7 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from pykafka.exceptions import SocketDisconnectedError, LeaderNotAvailable
 from audioPlayer import AudioPlayer
-from imageStreamer import ImageStream
+from imagePlayer import ImagePlayer
 from threading import Thread
 
 
@@ -22,14 +22,14 @@ class Consumer:
         self.KAFKA_VIDEO_TOPIC = video_topic
         self.client = KafkaClient(hosts = self.KAFKA_ADDR)
         self.player = AudioPlayer()
-        self.videoo = ImageStream()
+        self.videoo = ImagePlayer()
 
 
-    async def stop_audio_stream(self):
+    def stop_audio_stream(self):
         self.player.stop_stream()
 
 
-    async def stop_vidio_stream(self):
+    def stop_vidio_stream(self):
         self.videoo.stop_stream()
 
 
@@ -38,11 +38,10 @@ class Consumer:
         try:
             for message in consumer:
                 if message is not None:
-                    self.player.bytes2Audio(message.value)
-                    
+                    self.player.stream.write(message.value)
+
         except (SocketDisconnectedError, LeaderNotAvailable):
             print("Reconnecting...")
-            # self.runConsumer()
             consumer.close()
 
 
@@ -51,9 +50,8 @@ class Consumer:
         try:
             for message in consumer:
                 if message is not None:
-                    self.videoo.frame2image(message.value)
+                    self.videoo.getFrame(message.value)
 
         except (SocketDisconnectedError, LeaderNotAvailable):
             print("Reconnecting...")
-            # self.runConsumer()
             consumer.close()

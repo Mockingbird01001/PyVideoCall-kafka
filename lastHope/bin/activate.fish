@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/mockingbird/Desktop/Ynov/M1-2022-2023/lastHope"
+set -gx VIRTUAL_ENV "/home/mockingbird/Desktop/Ynov/M1-2022-2023/projet/lastHope"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

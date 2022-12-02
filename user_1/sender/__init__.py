@@ -1,21 +1,27 @@
 # -*- coding: utf-8 -*-
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-25 14:37:00
-# @Last Modified by:   mockingbird
-# @Last Modified time: 2022-12-01 15:56:09
+# @Last Modified by:   BOUFALA Yacine
+# @Last Modified time: 2022-12-02 02:57:36
 
 
 from imageStreamer import ImageStream
 from audioStreamer import AudioStream
-from threading import Thread
+from multiprocessing import Process
+from time import sleep
 
-def initStream():
-	audio = Thread(target=AudioStream().send_audio_stream(), args=(,))	
-	video = Thread(target=ImageStream().send_image_stream(), args=(,))	
-	audio.start()
-	video.start()
+def initAudio():
+    AudioStream().send_audio_stream()
 
 
-if __name__ == "__main__":
-	# send video stream
-	initStream()
+def initVideo():
+    ImageStream().send_image_stream()
+
+
+if __name__ == '__main__':
+    # audio = Process( target =  initAudio)  
+    # audio.start()
+
+    video = Process( target = initVideo)   
+    video.start()
+    

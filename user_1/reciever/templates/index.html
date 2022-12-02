@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./styles.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 	<title>PyCapibarraaaaa</title>
 </head>
 
@@ -20,21 +20,21 @@
 					
 					<button class="call__service" type="button">
 						<span class="call__service-icon">
-							<img src="./images/video.svg" alt="">
+							<img src="{{ url_for('static', filename='images/video.svg') }}" alt="">
 						</span>
 						<span class="call__service-info">Video</span>
 					</button>
 					
 					<button class="call__service call__service--end" type="button">
 						<span class="call__service-icon">
-							<img src="./images/call-end.svg" alt="">
+							<img src="{{ url_for('static', filename='images/call-end.svg') }}" alt="">
 						</span>
 						<span class="call__service-info">Raccrocher.</span>
 					</button>
 					
 					<button class="call__service" type="button">
 						<span class="call__service-icon">
-							<img src="./images/voice-mute.svg" alt="">
+							<img src="{{ url_for('static', filename='images/voice-mute.svg') }}" alt="">
 						</span>
 						<span class="call__service-info">Mute</span>
 					</button>
@@ -49,7 +49,7 @@
 </html>
 
 <script>
-	document.addEventListener("DOMContentLoaded", () => {
+	/*document.addEventListener("DOMContentLoaded", () => {
 		var video = document.getElementById("renderer");
 		var mediaDevices = navigator.mediaDevices;
 		
@@ -71,5 +71,5 @@
 		
 		}).catch(alert);
 
-	});
+	});*/
 </script>

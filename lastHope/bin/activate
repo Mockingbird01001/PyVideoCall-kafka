@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/mockingbird/Desktop/Ynov/M1-2022-2023/lastHope"
+VIRTUAL_ENV="/home/mockingbird/Desktop/Ynov/M1-2022-2023/projet/lastHope"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

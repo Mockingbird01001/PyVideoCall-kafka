@@ -1,18 +1,38 @@
-# -*- coding: utf-8 -*-
-# @Author: mockingbird
-# @Date:   2022-12-01 15:57:25
-# @Last Modified by:   mockingbird
-# @Last Modified time: 2022-12-01 16:37:04
-
 from flask import Flask , Response, render_template , request 
-from imagePlayer import ImagePlayer
-from audioPlayer import AudioPlayer
-from threading import Thread
+from pykafka import KafkaClient
+from pykafka.common import OffsetType
+import numpy as np
+import cv2
 
 
-status = False
 app = Flask(__name__)
-consumer = Consumer()
+
+#############################################
+
+vid = cv2.VideoCapture(0)
+client = KafkaClient(hosts="localhost:9092")
+topic = client.topics[b'ImageFlux']
+switch = 1
+#############################################
+
+
+def streaming():  
+    global vid
+    consumer = topic.get_simple_consumer(auto_offset_reset=OffsetType.LATEST,reset_offset_on_start=True)
+    for message in consumer:
+        if switch :
+            nparr = np.fromstring(message.value, np.uint8)
+            frame_recieved = cv2.imdecode(nparr,cv2.IMREAD_COLOR)
+            ret, buffer = cv2.imencode('.jpeg', frame_recieved)
+            frame = buffer.tobytes()
+            yield (b'--frame\n'
+                   b'Content-Type: image/jpeg\n\n' + frame + b'\n')
+                #--frame
+                #Content-Type: image/jpeg
+                #
+                #<jpeg data>
+        else :
+            pass
 
 
 @app.route("/")
@@ -23,62 +43,17 @@ def index():
 
 @app.route('/buttons',methods=['POST'])
 def buttons ():
+    global switch , vid
     if request.form.get('Camera Off') == 'Off':
-        status = False
-        stopAll()
-        
+        switch = 0
     if request.form.get('Camera On') == 'On':
-        status = True
-
+        switch = 1
     return render_template('index.html')
-
-
-async def stopAll():
-    end_audio = Thread(target=stopAudio, args=(,))
-    end_video = Thread(target=stopVidio, args=(,))
-    end_audio.start()
-    end_video.start()
-
-
-async def stopAudio():
-    try:
-        consumer.stop_audio_stream()
-    except: 
-        print('already closed !')
-
-async def stopVidio():
-    try:
-        consumer.stop_vidio_stream()
-    except: 
-        print('already closed !')
-
-async def startAudio():
-    if status:
-    	try:
-            consumer.runAudioConsumer()
-        finally:
-            stopAudio()
-    else: 
-        pass
-
-
-async def startVideo():
-    if status:
-        try:
-            consumer.runVideoConsumer()
-        finally:
-            stopVidio()
-    else: 
-        pass
-
 
 @app.route('/video_feed')
 def video_feed():
-	# activer le flux de la webcam
-	startAudio()
-	# mixed-replace permet de remplacer la frame precedente par la suivante 
-    return Response(startVideo(), mimetype='multipart/x-mixed-replace; boundary=frame') 
-
+    
+    return Response(streaming(), mimetype='multipart/x-mixed-replace; boundary=frame')
     
 if __name__ == "__main__":
     app.debug = True
