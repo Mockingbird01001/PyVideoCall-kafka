@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 15:59:17
+# @Last Modified time: 2022-12-02 16:10:49
 
 
 from pykafka import KafkaClient
@@ -17,7 +17,7 @@ import pyaudio as pyu
 class Consumer:
 
 
-    def __init__(self, host="192.168.111.129:9092", audio_topic='AudioFlux_1', video_topic='ImageFlux_1', my_own_video_topic='ImageFluxToMyOwn'):
+    def __init__(self, host="localhost:9092", audio_topic='AudioFlux_2', video_topic='ImageFlux_2', my_own_video_topic='ImageFluxToMyOwn'):
         self.KAFKA_ADDR = host
         self.KAFKA_AUDIO_TOPIC = audio_topic
         self.KAFKA_VIDEO_TOPIC = video_topic
@@ -42,7 +42,6 @@ class Consumer:
         consumer = self.client.topics[self.KAFKA_AUDIO_TOPIC].get_simple_consumer(auto_offset_reset=OffsetType.LATEST, reset_offset_on_start=True)
         try:
             for message in consumer:
-                print('ok')
                 if message is not None:
                     self.stream.write(message.value)
             

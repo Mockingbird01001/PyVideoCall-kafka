@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 15:08:15
+# @Last Modified time: 2022-12-02 16:08:11
 
 
 from flask import Flask , Response, render_template , request 
@@ -18,9 +18,6 @@ def gueuller():
 def streaming():  
     return Consumer().runVideoConsumer()
 
-def own_Streaming():
-    return Consumer().runMyOwnVideoConsumer()
-
 
 @app.route("/")
 @app.route("/index")
@@ -33,12 +30,6 @@ def video_feed():
     audio = Process(target = gueuller )
     audio.start()
     return Response(     streaming(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-
-@app.route('/my_own_video')
-def my_own_video():
-    
-    return Response( own_Streaming(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 if __name__ == "__main__":
