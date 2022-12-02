@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 14:54:50
+# @Last Modified time: 2022-12-02 14:58:53
 
 
 from pykafka import KafkaClient
@@ -17,7 +17,7 @@ import pyaudio as pyu
 class Consumer:
 
 
-   def __init__(self, host="localhost:9092", audio_topic='AudioFlux_1', video_topic='ImageFlux_1', my_own_video_topic='ImageFluxToMyOwn'):
+    def __init__(self, host="localhost:9092", audio_topic='AudioFlux_1', video_topic='ImageFlux_1', my_own_video_topic='ImageFluxToMyOwn'):
         self.KAFKA_ADDR = host
         self.KAFKA_AUDIO_TOPIC = audio_topic
         self.KAFKA_VIDEO_TOPIC = video_topic
@@ -38,10 +38,6 @@ class Consumer:
                                       frames_per_buffer=self.CHUNK)
 
 
-    def stop_audio_stream(self):
-        self.stream.stop_stream()
-
-
     def runAudioConsumer(self):
         consumer = self.client.topics[self.KAFKA_AUDIO_TOPIC].get_simple_consumer(auto_offset_reset=OffsetType.LATEST, reset_offset_on_start=True)
         try:
@@ -55,6 +51,10 @@ class Consumer:
         except (SocketDisconnectedError, LeaderNotAvailable):
             print("Reconnecting...")
             consumer.close()
+
+
+    def stop_audio_stream(self):
+        self.stream.stop_stream()
 
 
     def runVideoConsumer(self):
