@@ -2,14 +2,13 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 11:20:10
+# @Last Modified time: 2022-12-02 12:01:27
 
 
 # from audioPlayer import AudioPlayer
 from pykafka import KafkaClient
 from pykafka.common import OffsetType
 from pykafka.exceptions import SocketDisconnectedError, LeaderNotAvailable
-from audioPlayer import AudioPlayer
 from threading import Thread
 import cv2
 import numpy as np 
@@ -18,14 +17,14 @@ import pyaudio as pyu
 
 class Consumer:
     
-    def __init__(self, host="192.168.111.129:9092", audio_topic='AudioFlux_2', video_topic='ImageFlux_2'):
+    def __init__(self, host="localhost:9092", audio_topic='AudioFlux_2', video_topic='ImageFlux_2'):
         self.KAFKA_ADDR = host
         self.KAFKA_AUDIO_TOPIC = audio_topic
         self.KAFKA_VIDEO_TOPIC = video_topic
         self.client = KafkaClient(hosts = self.KAFKA_ADDR)
         self.CHUNK = 2048
         self.FORMAT = pyu.paFloat32
-        self.CHANNELS = 2
+        self.CHANNELS = 1
         self.RATE = 3200
         self.INPUT = False
         self.OUTPUT = True
@@ -46,7 +45,7 @@ class Consumer:
         consumer = self.client.topics[self.KAFKA_AUDIO_TOPIC].get_simple_consumer(auto_offset_reset=OffsetType.LATEST, reset_offset_on_start=True)
         try:
             for message in consumer:
-            
+                print('ok')
                 if message is not None:
                     self.stream.write(message.value)
             
