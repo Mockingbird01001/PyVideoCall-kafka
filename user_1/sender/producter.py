@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 14:38:08
+# @Last Modified time: 2022-12-02 15:17:14
 
 
 from datetime import datetime
@@ -14,7 +14,7 @@ import pyaudio as pyu
 class Producer:
 
 
-    def __init__(self, topic, host="192.168.111.129:9092"):
+    def __init__(self, topic, host="192.168.111.200:9092"):
         self.KAFKA_TOPIC = topic
         self.client = KafkaClient(hosts=host) 
         self.CHUNK = 2048

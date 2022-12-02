@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 14:48:30
+# @Last Modified time: 2022-12-02 15:17:53
 
 
 # from audioPlayer import AudioPlayer
@@ -17,7 +17,7 @@ import pyaudio as pyu
 
 class Consumer:
     
-    def __init__(self, host="localhost:9092", audio_topic='AudioFlux_1', video_topic='ImageFlux_1', my_own_video_topic='ImageFluxToMyOwn'):
+    def __init__(self, host="192.168.111.200:9092", audio_topic='AudioFlux_1', video_topic='ImageFlux_1', my_own_video_topic='ImageFluxToMyOwn'):
         self.KAFKA_ADDR = host
         self.KAFKA_AUDIO_TOPIC = audio_topic
         self.KAFKA_VIDEO_TOPIC = video_topic
