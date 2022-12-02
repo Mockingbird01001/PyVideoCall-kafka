@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 15:10:12
+# @Last Modified time: 2022-12-02 15:20:39
 
 
 from flask import Flask , Response, render_template , request 

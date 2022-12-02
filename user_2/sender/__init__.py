@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-25 14:37:00
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 14:45:44
+# @Last Modified time: 2022-12-02 15:28:34
 
 from producter import Producer
 from multiprocessing import Process
@@ -28,6 +28,6 @@ if __name__ == '__main__':
     video = Process( target = initVideo)   
     video.start()
 
-    video__own = Process( target = initMyOwnVideo)
-    video__own.start()
+    # video__own = Process( target = initMyOwnVideo)
+    # video__own.start()
     
