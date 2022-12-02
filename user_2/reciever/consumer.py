@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-24 17:54:57
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 14:38:02
+# @Last Modified time: 2022-12-02 14:48:30
 
 
 # from audioPlayer import AudioPlayer
@@ -17,10 +17,11 @@ import pyaudio as pyu
 
 class Consumer:
     
-    def __init__(self, host="localhost:9092", audio_topic='AudioFlux_1', video_topic='ImageFlux_1'):
+    def __init__(self, host="localhost:9092", audio_topic='AudioFlux_1', video_topic='ImageFlux_1', my_own_video_topic='ImageFluxToMyOwn'):
         self.KAFKA_ADDR = host
         self.KAFKA_AUDIO_TOPIC = audio_topic
         self.KAFKA_VIDEO_TOPIC = video_topic
+        self.KAFKA_VIDEO_MY_OWN_TOPIC = my_own_video_topic
         self.client = KafkaClient(hosts = self.KAFKA_ADDR)
         self.CHUNK = 2048
         self.FORMAT = pyu.paFloat32
@@ -67,6 +68,26 @@ class Consumer:
                         frame_recieved = cv2.imdecode(bytes_array,cv2.IMREAD_COLOR)
                         ret, buffer = cv2.imencode('.png', frame_recieved)
                         frame = buffer.tobytes()
+                        yield (b'--frame\n'
+                               b'Content-Type: image/png\n\n' + frame + b'\n')
+
+            except (SocketDisconnectedError, LeaderNotAvailable):
+                print("Reconnecting...")
+                consumer.close()
+
+
+    def runMyOwnVideoConsumer(self):
+        while True:
+            consumer = self.client.topics[self.KAFKA_VIDEO_MY_OWN_TOPIC].get_simple_consumer(auto_offset_reset=OffsetType.LATEST, reset_offset_on_start=True)
+            try:
+                for message in consumer:
+                    if message is not None:
+
+                        bytes_array = np.fromstring(message.value, np.uint8)
+                        frame_recieved = cv2.imdecode(bytes_array,cv2.IMREAD_COLOR)
+                        ret, buffer = cv2.imencode('.png', frame_recieved)
+                        frame = buffer.tobytes()
+                        
                         yield (b'--frame\n'
                                b'Content-Type: image/png\n\n' + frame + b'\n')
 

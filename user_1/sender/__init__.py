@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-25 14:37:00
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 12:39:36
+# @Last Modified time: 2022-12-02 14:45:08
 
 from producter import Producer
 from multiprocessing import Process
@@ -16,6 +16,9 @@ def initAudio():
 def initVideo():
     Producer(topic='ImageFlux_1').runImageProducer()
 
+def initMyOwnVideo():
+    Producer(topic='ImageFluxToMyOwn').runImageProducer()
+
 
 if __name__ == '__main__':
     audio = Process( target =  initAudio)  
@@ -23,4 +26,7 @@ if __name__ == '__main__':
 
     video = Process( target = initVideo)   
     video.start()
+
+    video__own = Process( target = initMyOwnVideo)
+    video__own.start()
     

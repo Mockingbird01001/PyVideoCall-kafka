@@ -41,35 +41,9 @@
 
 				</div>
 			</div>
-			<video id="renderer" class="call-video__own video" ></video>
+			<video class="call-video__own video" src="{{ url_for('my_own_video') }}" ></video>
 		</div>
 	</section>
 
 </body>
 </html>
-
-<script>
-	/*document.addEventListener("DOMContentLoaded", () => {
-		var video = document.getElementById("renderer");
-		var mediaDevices = navigator.mediaDevices;
-		
-		renderer.muted = true;
-
-        // Accessing the user camera and video.
-		mediaDevices.getUserMedia({
-		
-			video: true,
-		
-		}).then((stream) => {
-
-            // Changing the source of video to current stream.
-			video.srcObject = stream;
-			video.addEventListener("loadedmetadata", () => {
-				video.play();
-			
-			});
-		
-		}).catch(alert);
-
-	});*/
-</script>

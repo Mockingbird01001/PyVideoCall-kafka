@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+# @Author: BOUFALA Yacine
+# @Date:   2022-11-24 17:54:57
+# @Last Modified by:   BOUFALA Yacine
+# @Last Modified time: 2022-12-02 14:53:46
+
+
 from flask import Flask , Response, render_template , request 
-# from pykafka import KafkaClient
-# from pykafka.common import OffsetType
-# import numpy as np
-# import cv2
 from multiprocessing import Process
 from consumer import Consumer
 
@@ -15,6 +18,9 @@ def gueuller():
 def streaming():  
     return Consumer().runVideoConsumer()
 
+def own_Streaming():
+    return Consumer().runMyOwnVideoConsumer()
+
 
 @app.route("/")
 @app.route("/index")
@@ -26,9 +32,15 @@ def index():
 def video_feed():
     audio = Process(target = gueuller )
     audio.start()
-
     return Response(streaming(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    
+
+
+@app.route('/my_own_video')
+def myStream():
+    ownVideo = Process( target = own_Streaming )
+    ownVideo.start() 
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run(host='localhost', port=9874)
