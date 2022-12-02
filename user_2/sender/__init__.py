@@ -2,7 +2,7 @@
 # @Author: BOUFALA Yacine
 # @Date:   2022-11-25 14:37:00
 # @Last Modified by:   BOUFALA Yacine
-# @Last Modified time: 2022-12-02 10:53:17
+# @Last Modified time: 2022-12-02 11:10:31
 
 from producter import Producer
 from multiprocessing import Process
@@ -10,11 +10,11 @@ from time import sleep
 
 
 def initAudio():
-    Producer(topic='AudioFlux_1').runAudioProducer()
+    Producer(topic='AudioFlux_2').runAudioProducer()
 
 
 def initVideo():
-    Producer(topic='ImageFlux_1').runImageProducer()
+    Producer(topic='ImageFlux_2').runImageProducer()
 
 
 if __name__ == '__main__':

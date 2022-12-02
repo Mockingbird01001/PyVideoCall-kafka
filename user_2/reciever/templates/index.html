@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+	<title>PyCapibarraaaaa</title>
+</head>
+
+<body>
+
+	<section class="call">
+		<div class="call-wrapper">
+			<img id="bg" class="call-video__peer" src="{{ url_for('video_feed') }}">
+			<div class="call-wrapper__content" style="height: 80vh;">
+				
+				<div class="call__services" style="margin-top: 44em;">
+					
+					<button class="call__service" type="button">
+						<span class="call__service-icon">
+							<img src="{{ url_for('static', filename='images/video.svg') }}" alt="">
+						</span>
+						<span class="call__service-info">Video</span>
+					</button>
+					
+					<button class="call__service call__service--end" type="button">
+						<span class="call__service-icon">
+							<img src="{{ url_for('static', filename='images/call-end.svg') }}" alt="">
+						</span>
+						<span class="call__service-info">Raccrocher.</span>
+					</button>
+					
+					<button class="call__service" type="button">
+						<span class="call__service-icon">
+							<img src="{{ url_for('static', filename='images/voice-mute.svg') }}" alt="">
+						</span>
+						<span class="call__service-info">Mute</span>
+					</button>
+
+				</div>
+			</div>
+			<video id="renderer" class="call-video__own video" ></video>
+		</div>
+	</section>
+
+</body>
+</html>
+
+<script>
+	/*document.addEventListener("DOMContentLoaded", () => {
+		var video = document.getElementById("renderer");
+		var mediaDevices = navigator.mediaDevices;
+		
+		renderer.muted = true;
+
+        // Accessing the user camera and video.
+		mediaDevices.getUserMedia({
+		
+			video: true,
+		
+		}).then((stream) => {
+
+            // Changing the source of video to current stream.
+			video.srcObject = stream;
+			video.addEventListener("loadedmetadata", () => {
+				video.play();
+			
+			});
+		
+		}).catch(alert);
+
+	});*/
+</script>
