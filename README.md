@@ -1,4 +1,5 @@
 # PyVideoCall-kafka
+
 Simple outils de visio conferance (video + audio) avec pyKafka entre deux utilisateurs, sera mis ajout pour accueillir un grand nombre d'utilisateurs.
 la librairie utilisé pour le traitement de l'audio est "pyAudio" elle n'est plus maintenue, c'est ce qui nous a poussé a créer un env sous python3.8.
 creation de deux topic pour l'image et le audio comme le montre le schema suivant:
@@ -32,7 +33,6 @@ idem pour le user_2
 ```
 cd user_2/sender/
 python producter.py
- 
 ```
 ### Executer le consumer pour avoir un rendu graphique
 ```
